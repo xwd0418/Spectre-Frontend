@@ -1,14 +1,14 @@
-import React, { useState,useEffect } from 'react';
 import { Select } from 'antd';
 
 const { Option } = Select;
 
 const HSQCFormatSelect = (props) => {
-  const [HSQCFormat, setHSQCFormat] = useState(props.formatChoice);
+  const HSQCFormat = props.initialFormat;
+  const setHSQCFormat = props.setFormat;
 
-  useEffect(() => {
-    setHSQCFormat(props.formatChoice);
-  }, [props]);
+//   useEffect(() => {
+//     setHSQCFormat(props.initialFormat);
+//   }, [props]);
 
   const handleChange = (value) => {
     setHSQCFormat(value);
@@ -23,10 +23,10 @@ const HSQCFormatSelect = (props) => {
         value={HSQCFormat}
         style={{ width: '100%' }}
       >
-        <Option value="option1">1H, 13C, peak</Option>
-        <Option value="option2">13C, 1H, peak</Option>
-        <Option value="option3">1H, 13C</Option>
-        <Option value="option4">13C, 1H</Option>
+        <Option value="option1">1H, 13C, peak intensity</Option>
+        <Option value="option2">13C, 1H, peak intensity</Option>
+        {/* <Option value="option3">1H, 13C</Option>
+        <Option value="option4">13C, 1H</Option> */}
       </Select>
       {/* {selectedOption && <div style={{ marginTop: '10px' }}>Selected: {selectedOption}</div>} */}
     </div>
