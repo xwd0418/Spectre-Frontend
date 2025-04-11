@@ -15,11 +15,11 @@ function App() {
         </Row>
         
         <Row>
-          <Title level={5} >SPECTRE is the latest transformer-based structure annotation model that accepts multiple types of NMR.</Title>
+          <Title level={3} >SPECTRE is the latest transformer-based structure annotation model that accepts multiple types of NMR.</Title>
         </Row>
 
         <Row>
-          <Title level={5} >Load the Kavaratamide A example using the button below to see how it works!</Title>
+          <Title level={4} >Load the Kavaratamide A example using the button below to see how it works!</Title>
         </Row>
       </Col>
       <TabsNMR />

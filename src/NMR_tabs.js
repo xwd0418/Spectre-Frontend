@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Tabs, Spin, Input, Button, Row, Col, InputNumber, Space, Form } from 'antd';
+import { Tabs, Spin, Input, Button, Col, Row, InputNumber, Space, Form } from 'antd';
 import {HSQCFormatSelect} from "./HSQC_config_selection";
+import FilterComponent from "./MW_filter";
 // import 'antd/dist/antd.css';
 
 const { TextArea } = Input;
@@ -11,8 +12,11 @@ const TabsNMR = () => {
     CNMR: '',
     HNMR: '',
     MolecularWeight: '',
-    k_samples: 50
+    // k_samples: 50,
   });
+
+  const [k_samples, setK_samples] = useState(10);
+  const [MW_range, setMW_range] = useState(null);
 
   const [retrievals, setRetrievals] = useState([]);
   const textAreaSize = {  rows: 30, cols: 50  }
@@ -38,8 +42,10 @@ const TabsNMR = () => {
             "H_NMR": tabContent.HNMR,
             "MW": tabContent.MolecularWeight,
             "HSQC_format": selectedHSQCFormat,
-            "k_samples": tabContent.k_samples
+            "k_samples": k_samples,
+            "MW_range":MW_range
         });
+        console.log("body",body)
         const response = await fetch('https://spectre.ucsd.edu/api/generate-retrievals', {
             method: 'POST',
             headers: {
@@ -68,7 +74,8 @@ const TabsNMR = () => {
       CNMR: '180.01, 172.93, 172.25, 171.14, 170.16, 169.14, 94.71, 78.41, 68.98, 64.37, 58.70, 53.87, 52.75, 42.90, 37.09, 31.95, 31.91, 31.26, 29.85, 29.68, 29.38, 28.87, 28.47, 25.60, 22.80, 19.81, 19.77, 18.84, 17.43, 16.09, 15.32, 14.27, 14.24',
       HNMR: '6.55, 6.53, 5.82, 5.81, 5.31, 5.30, 5.28, 5.27, 5.07, 4.85, 4.84, 4.83, 4.82, 4.50, 4.50, 3.95, 3.85, 3.85, 3.04, 2.60, 2.59, 2.58, 2.57, 2.39, 2.37, 2.36, 2.31, 2.29, 2.28, 2.26, 2.24, 2.24, 2.23, 2.22, 2.22, 2.21, 2.08, 2.07, 2.06, 2.05, 1.56, 1.55, 1.53, 1.51, 1.46, 1.45, 1.10, 1.08, 1.05, 1.04, 1.02, 1.00, 0.93, 0.91, 0.90, 0.90, 0.89, 0.88, 0.86, 0.78, 0.77',
       MolecularWeight: '609.0',
-      k_samples: tabContent.k_samples
+      k_samples: k_samples,
+      MW_range: MW_range
     });
     setSelectedHSQCFormat('option1');
   };
@@ -133,23 +140,26 @@ const TabsNMR = () => {
 
   return (
     <div>
-        <Row gutter={16}>
+    <Row>
         <Col span={9} offset={1}>
-            <Tabs defaultActiveKey="HSQC" items={tabItems} />
-            <Button type="primary" onClick={LoadKavaratamideA} style={{ marginTop: '16px' }}>
+            <Button type="dashed" onClick={LoadKavaratamideA} style={{ marginTop: '16px' }}>
               Load Example: Kavaratamide A
             </Button>
-            <br />
-            <Space style={{ marginTop: '16px' }}>
+            <Tabs defaultActiveKey="HSQC" items={tabItems} />
+            
+            <Space direction="vertical" style={{ marginTop: '16px' }}>
                 <Form.Item label="Number of Retrievals" style={{ margin: 0 }}>
                     <InputNumber
                         min={1}
                         parser={(value) => value.replace(/\D/g, '')}  // Ensures only positive integers
-                        defaultValue={50}
-                        style={{ width: '160px' }}
-                        onChange={(value) => handleInputChange('k_samples', value)}
+                        defaultValue={10}
+                        style={{ width: '100px' }}
+                        onChange={(value) => setK_samples(value)}
                     />
-                </Form.Item>
+                </Form.Item>       
+            
+                <FilterComponent MW={tabContent.MolecularWeight} setMWRange={setMW_range}/>
+            
                 <Button type="primary" onClick={handleGenerate}>
                     Generate
                 </Button>
@@ -161,7 +171,7 @@ const TabsNMR = () => {
         ) : 
             <div>
                 { NMRPlot!=null && <div>
-                    <h4>Plot of NMR data</h4>
+                    <h4 style={{ textAlign: 'center' }} >Plot of NMR data</h4>
                     <img key={0} src={`data:image/png;base64,${NMRPlot}`} alt={`NMR plot`} style={{ maxWidth: '100%', height: 'auto' }} />
                     <br />
                 </div> }
@@ -174,9 +184,9 @@ const TabsNMR = () => {
                         <br /> 
                         SMILES : {retrieval['smile']}
                         <br />
-                        Molecular Weight : {retrieval['MW']}
+                        Molecular Weight : {retrieval['MW'].toFixed(3)}
                         <br />
-                        cosine similarity between retrival and prediction : {retrieval['cos']}
+                        Cosine similarity between retrival and prediction : {retrieval['cos'].toFixed(4)}
                         <br />
                         <img key={index} src={`data:image/png;base64,${retrieval['image']}`} alt={`Generated ${index}`} style={{ maxWidth: '100%', height: 'auto' }} />
                         <br />
@@ -187,8 +197,9 @@ const TabsNMR = () => {
             </div>
         }
         </Col>
-        </Row>
+    </Row>
     </div>
+
   );
 };
 
