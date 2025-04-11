@@ -25,7 +25,9 @@ const FilterComponent = ({MW, setMWRange}) => {
             <InputNumber
                 min={0}
                 parser={(value) => value.replace(/[^\d.]/g, '')}  // Allows decimal increments
-                defaultValue={20}
+                defaultValue={0}
+                // it is set to 0 by default, because we have to change the value to call the OnChange function
+                // OMG i suck at frontend dev
                 style={{ width: '200px' }}
                 addonBefore="±"
                 addonAfter="amu"
@@ -37,7 +39,7 @@ const FilterComponent = ({MW, setMWRange}) => {
           <InputNumber
             min={0}
             parser={(value) => value.replace(/[^\d.]/g, '')}  // Allows decimal increments
-            defaultValue={20}
+            defaultValue={0}
             style={{ width: '200px' }}
             addonBefore="±"
             addonAfter="%"
