@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
-import { Tabs, Spin, Input, Button, Col, Row, InputNumber, Space, Form } from 'antd';
+import React, { useState} from 'react';
+import { Tabs, Spin, Input, Button, Col, Row, InputNumber, Space, Form, Card } from 'antd';
 import {HSQCFormatSelect} from "./HSQC_config_selection";
 import FilterComponent from "./MW_filter";
+
 // import 'antd/dist/antd.css';
 
 const { TextArea } = Input;
 
+const renderTruncatedBulletList = (items) => {
+    if (!Array.isArray(items)) return null;
+  
+    return (
+      <ul style={{ paddingLeft: '20px', textAlign: 'left' }}>
+        {items.map((item, idx) => {
+          const displayText = item.length > 50 ? item.slice(0, 50) + '...' : item;
+          return <li key={idx}>{displayText}</li>;
+        })}
+      </ul>
+    );
+  };
+
+  
 const TabsNMR = () => {
   const [tabContent, setTabContent] = useState({
     HSQC: '',
@@ -207,23 +222,45 @@ const TabsNMR = () => {
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
                     {retrievals.map((retrieval, index) => (
+                    <Card
+                        key={index}
+                        title={`Retrieved Compound ${index + 1}`}
+                        style={{ marginBottom: '24px', borderRadius: '12px' }}
+                        bordered
+                    >
                         <div key={index} style={{ margin: '10px', textAlign: 'center' }}>
-                        <h5>Retrieved Compound {index + 1}</h5>
-                        Name : {retrieval['name']}
-                        <br /> 
-                        SMILES : {retrieval['smile']}
-                        <br />
-                        Molecular Weight : {retrieval['MW'].toFixed(3)}
-                        <br />
-                        Cosine similarity between retrival and prediction : {retrieval['cos'].toFixed(4)}
-                        <br />
-                        <img
-                            src={`data:image/png;base64,${showMapping ? retrieval['image_with_sim_map'] : retrieval['image_no_sim_map']}`}
-                            alt={`Generated ${index}`}
-                            style={{ maxWidth: '100%', height: 'auto' }}
-                            />
-                        <br />
+                            {/* <h5>Retrieved Compound {index + 1}</h5> */}
+                            <strong>Name:</strong>
+                                {renderTruncatedBulletList(retrieval.name)}
+
+                            <br /> 
+                            <strong>SMILES: </strong> 
+                                {retrieval['smile']}
+                            <br />
+                            <strong>Molecular Weight: </strong>  
+                                {retrieval['MW'].toFixed(3)}
+                            <br />
+                            <strong>Predited cosine similarity between retrival and prediction : </strong>
+                                {retrieval['cos'].toFixed(4)}
+                            <br />
+                            <img
+                                src={`data:image/png;base64,${showMapping ? retrieval['image_with_sim_map'] : retrieval['image_no_sim_map']}`}
+                                alt={`Generated ${index}`}
+                                style={{ maxWidth: '100%', height: 'auto' }}
+                                />
+                            <br />
+                            <div style={{ textAlign: 'left', fontSize: '0.9rem', marginTop: '8px' }}>
+                                <strong>NP Classification:</strong>
+                                <ul style={{ paddingLeft: '20px' }}>
+                                    <li><strong>Pathway:</strong> {retrieval['np_class']['pathway_results'].join(', ') || 'N/A'}</li>
+                                    <li><strong>Superclass:</strong> {retrieval['np_class']['superclass_results'].join(', ') || 'N/A'}</li>
+                                    <li><strong>Class:</strong> {retrieval['np_class']['class_results'].join(', ') || 'N/A'}</li>
+                                    <li><strong>Glycoside:</strong> {retrieval['np_class']['isglycoside'] ? 'Yes' : 'No'}</li>
+                            
+                                </ul>
+                            </div>
                         </div>
+                    </Card>
                     ))}
                 </div>
 
