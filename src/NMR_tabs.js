@@ -240,7 +240,7 @@ const TabsNMR = () => {
                             <strong>Molecular Weight: </strong>  
                                 {retrieval['MW'].toFixed(3)}
                             <br />
-                            <strong>Predited cosine similarity between retrival and prediction : </strong>
+                            <strong>Predicted cosine similarity between retrival and prediction : </strong>
                                 {retrieval['cos'].toFixed(4)}
                             <br />
                             <img
@@ -251,13 +251,18 @@ const TabsNMR = () => {
                             <br />
                             <div style={{ textAlign: 'left', fontSize: '0.9rem', marginTop: '8px' }}>
                                 <strong>NP Classification:</strong>
-                                <ul style={{ paddingLeft: '20px' }}>
-                                    <li><strong>Pathway:</strong> {retrieval['np_class']['pathway_results'].join(', ') || 'N/A'}</li>
-                                    <li><strong>Superclass:</strong> {retrieval['np_class']['superclass_results'].join(', ') || 'N/A'}</li>
-                                    <li><strong>Class:</strong> {retrieval['np_class']['class_results'].join(', ') || 'N/A'}</li>
-                                    <li><strong>Glycoside:</strong> {retrieval['np_class']['isglycoside'] ? 'Yes' : 'No'}</li>
-                            
-                                </ul>
+                                {retrieval['np_class']?.error ? (
+                                    <div style={{ color: 'red', fontWeight: 'bold' }}>
+                                        Error: NP Classifier API failed with this query SMILES.
+                                    </div>
+                                ) : (
+                                    <ul style={{ paddingLeft: '20px' }}>
+                                        <li><strong>Pathway:</strong> {retrieval['np_class']['pathway_results']?.join(', ') || 'N/A'}</li>
+                                        <li><strong>Superclass:</strong> {retrieval['np_class']['superclass_results']?.join(', ') || 'N/A'}</li>
+                                        <li><strong>Class:</strong> {retrieval['np_class']['class_results']?.join(', ') || 'N/A'}</li>
+                                        <li><strong>Glycoside:</strong> {retrieval['np_class']['isglycoside'] ? 'Yes' : 'No'}</li>
+                                    </ul>
+                                )}
                             </div>
                         </div>
                     </Card>
