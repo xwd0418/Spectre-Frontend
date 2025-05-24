@@ -7,18 +7,25 @@ import FilterComponent from "./MW_filter";
 
 const { TextArea } = Input;
 
-const renderTruncatedBulletList = (items) => {
+export const renderTruncatedBulletList = (items) => {
     if (!Array.isArray(items)) return null;
+  
+    const limitedItems = items.slice(0, 15);
   
     return (
       <ul style={{ paddingLeft: '20px', textAlign: 'left' }}>
-        {items.map((item, idx) => {
+        {limitedItems.map((item, idx) => {
           const displayText = item.length > 50 ? item.slice(0, 50) + '...' : item;
           return <li key={idx}>{displayText}</li>;
         })}
+        {items.length > 15 && (
+          <li style={{ fontStyle: 'italic', color: '#666' }}>
+            ... and {items.length - 15} more
+          </li>
+        )}
       </ul>
     );
-  };
+};
 
   
 const TabsNMR = () => {
