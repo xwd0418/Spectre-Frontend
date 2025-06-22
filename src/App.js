@@ -2,6 +2,7 @@
 import TabsNMR from './NMR_tabs';
 import SMILESSearchTab from './SMILES_search_tab'; // Import your new component
 import { Typography, Col, Row, Tabs } from 'antd';
+import logo from './spectre_logo.jpg'; // adjust if path differs
 
 const { Title, Paragraph } = Typography;
 
@@ -24,9 +25,11 @@ function App() {
   return (
     <div className="App">
       <Col span={23} offset={1}>
-        <Row justify="center">
-          <Title level={1}>Welcome to SPECTRE</Title>
+        <Row align="middle" justify="center" style={{ paddingTop: 20, paddingLeft: 20 }}>
+            <Title level={1} style={{ margin: 0 }}>Welcome to</Title>
+            <img src={logo} alt="SPECTRE logo" style={{ height: 100, marginRight: 20 }} />
         </Row>
+
 
         <Row>
           <Title level={3}>

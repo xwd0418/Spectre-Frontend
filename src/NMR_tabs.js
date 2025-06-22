@@ -210,7 +210,7 @@ const TabsNMR = () => {
               Load Example: Kavaratamide A (multiplicity-edited HSQC)
             </Button>
             <Button type="dashed" onClick={LoadKavaratamideA_normal_HSQC} style={{ marginTop: '16px' }}>
-              Load Example: Kavaratamide A (normal HSQC)
+              Load Example: Kavaratamide A (Standard HSQC)
             </Button>
             <Tabs defaultActiveKey="HSQC" items={tabItems} />
             
