@@ -38,7 +38,7 @@ const TabsNMR = () => {
     // k_samples: 50,
   });
 
-  const [modelType, setModelType] = useState("optional");
+  const [modelType, setModelType] = useState("auto");
   const [k_samples, setK_samples] = useState(10);
   const [MW_range, setMW_range] = useState(null);
 
@@ -192,18 +192,16 @@ const TabsNMR = () => {
             <Form layout="vertical">
                 <Form.Item label={
                             <span>
-                                Select Model Type&nbsp;
-                                <Tooltip title="The default Flexible model accepts any kinds of input. For other specialized model, please make sure the corresponding NMR spectra and Molecular Weight are provided, while the unrelated spectra are not included as input.">
+                                Model Selection&nbsp;
+                                <Tooltip title="By default(auto selection), the best-performing model will be selected based on the input data. If you want to use the Spectre-flexible model, select 'Spectre-Flexible model'.">
                                 <QuestionCircleOutlined style={{ color: '#1890ff' }} />
                                 </Tooltip>
                             </span>
                             }>
-                    <Select defaultValue="optional" onChange={setModelType}>
-                    <Option value="optional">Flexible</Option>
-                    <Option value="only_C">Only C NMR + MW</Option>
-                    <Option value="only_H">Only H NMR + MW</Option>
-                    <Option value="only_1d">C NMR and H NMR + MW</Option>
-                    <Option value="only_HSQC">Only HSQC + MW</Option>
+                    <Select defaultValue="auto" onChange={setModelType}>
+                    <Option value="auto">Auto Model Selection</Option>
+                    <Option value="optional">Spectre-Flexible model</Option>
+                    
                     </Select>
                 </Form.Item>
             </Form> 
