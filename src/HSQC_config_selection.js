@@ -23,10 +23,10 @@ const HSQCFormatSelect = (props) => {
         value={HSQCFormat}
         style={{ width: '100%' }}
       >
-        <Option value="option1">1H, 13C, peak intensity</Option>
-        <Option value="option2">13C, 1H, peak intensity</Option>
-        {/* <Option value="option3">1H, 13C</Option>
-        <Option value="option4">13C, 1H</Option> */}
+        <Option value="option1">¹H, ¹³C, peak intensity</Option>
+        <Option value="option2">¹³C, ¹H, peak intensity</Option>
+        {/* <Option value="option3">¹H, ¹³C</Option>
+        <Option value="option4">¹³C, ¹H</Option> */}
       </Select>
       {/* {selectedOption && <div style={{ marginTop: '10px' }}>Selected: {selectedOption}</div>} */}
     </div>

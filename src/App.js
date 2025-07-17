@@ -17,7 +17,7 @@ function App() {
     },
     {
       key: 'smiles',
-      label: 'Retrival Database Search based on SMILES',
+      label: 'Retrieval Database Search based on SMILES',
       children: <SMILESSearchTab />
     }
   ];

@@ -144,7 +144,7 @@ const TabsNMR = () => {
     },
     {
       key: 'CNMR',
-      label: 'C-13 NMR',
+      label: '¹³C NMR',
       children: (
         <TextArea
           rows={textAreaSize.rows}
@@ -157,7 +157,7 @@ const TabsNMR = () => {
     },
     {
       key: 'HNMR',
-      label: 'H-1 NMR',
+      label: '¹H NMR',
       children: (
         <TextArea
           rows={textAreaSize.rows}
@@ -193,14 +193,14 @@ const TabsNMR = () => {
                 <Form.Item label={
                             <span>
                                 Model Selection&nbsp;
-                                <Tooltip title="By default(auto selection), the best-performing model will be selected based on the input data. If you want to use the Spectre-flexible model, select 'Spectre-Flexible model'.">
+                                <Tooltip title="By default(auto selection), the best-performing model will be selected based on the input data. If you want to always use the SPECTRE model, select 'SPECTRE'.">
                                 <QuestionCircleOutlined style={{ color: '#1890ff' }} />
                                 </Tooltip>
                             </span>
                             }>
                     <Select defaultValue="auto" onChange={setModelType}>
                     <Option value="auto">Auto Model Selection</Option>
-                    <Option value="optional">Spectre-Flexible model</Option>
+                    <Option value="optional">SPECTRE</Option>
                     
                     </Select>
                 </Form.Item>
